@@ -7,73 +7,95 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream:#FAF8F4; --warm-white:#F5F2EC; --stone:#E8E2D8;
-  --taupe:#C4B9A8; --warm-gray:#8C8378;
-  --dark:#2C2825; --charcoal:#4A4540;
-  --gold:#C9A96E; --geo:#7A2E22;
+  --cream:#FAF8F4;--stone:#E8E2D8;--taupe:#C4B9A8;--warm-gray:#8C8378;
+  --dark:#2C2825;--gold:#C9A96E;--geo:#7A2E22;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100vh;background:var(--dark);font-family:'DM Sans',sans-serif;overflow:hidden;display:flex;flex-direction:column;}
 
 /* HEADER */
-.tv-header{background:var(--dark);padding:14px 48px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.07);}
-.header-left{display:flex;align-items:center;gap:24px;}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:var(--cream);line-height:1;}
+.tv-header{background:var(--dark);padding:12px 40px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.07);}
+.header-left{display:flex;align-items:center;gap:20px;}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:22px;color:var(--cream);line-height:1;}
 .logo em{font-style:italic;color:var(--gold);}
-.logo small{display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-top:3px;font-family:'DM Sans',sans-serif;}
-.area-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;color:var(--cream);border-left:2px solid var(--gold);padding-left:24px;line-height:1;transition:opacity 0.35s;}
+.logo small{display:block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-top:3px;font-family:'DM Sans',sans-serif;}
+.area-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:34px;color:var(--cream);border-left:2px solid var(--gold);padding-left:20px;line-height:1;transition:opacity 0.35s;}
 .area-name em{font-style:italic;color:var(--gold);}
-.header-right{text-align:right;}
+.header-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.clock-row{display:flex;align-items:center;gap:12px;}
+.demo-badge{background:rgba(212,168,90,0.2);border:1px solid rgba(212,168,90,0.4);color:#D4A85A;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:2px;}
 .clock{font-family:'DM Mono',monospace;font-size:26px;color:var(--cream);line-height:1;}
-.date-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-top:4px;}
-.nav-dots{display:flex;gap:6px;align-items:center;margin-top:8px;justify-content:flex-end;}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);transition:background 0.4s,transform 0.3s;cursor:pointer;}
+.date-lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.nav-dots{display:flex;gap:6px;align-items:center;justify-content:flex-end;}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.15);transition:background 0.4s,transform 0.3s;cursor:pointer;}
 .dot.active{background:var(--gold);transform:scale(1.3);}
-.demo-badge{background:rgba(212,168,90,0.2);border:1px solid rgba(212,168,90,0.4);color:#D4A85A;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:2px;font-family:'DM Sans',sans-serif;}
 
 /* KPI STRIP */
-.kpi-strip{background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07);padding:10px 48px;display:flex;gap:0;align-items:center;flex-shrink:0;}
-.kpi-item{display:flex;flex-direction:column;align-items:center;min-width:72px;padding:0 16px;}
+.kpi-strip{background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07);padding:8px 40px;display:flex;gap:0;align-items:center;flex-shrink:0;}
+.kpi-item{display:flex;flex-direction:column;align-items:center;min-width:72px;padding:0 14px;}
 .kpi-item:first-child{padding-left:0;}
 .kpi-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:var(--cream);line-height:1;}
 .kpi-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-top:3px;}
 .kpi-sep{width:1px;height:36px;background:rgba(255,255,255,0.08);}
-.area-nav{display:flex;gap:6px;align-items:center;margin-left:auto;padding-left:24px;}
-.nav-btn{padding:5px 14px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.12);background:transparent;border-radius:2px;cursor:pointer;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.area-nav{display:flex;gap:6px;align-items:center;margin-left:auto;padding-left:20px;flex-wrap:wrap;}
+.nav-btn{padding:5px 12px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.12);background:transparent;border-radius:2px;cursor:pointer;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;transition:all 0.2s;white-space:nowrap;}
 .nav-btn.active{background:var(--geo);color:#fff;border-color:var(--geo);}
-.nav-btn:hover:not(.active){background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);}
+.nav-btn:hover:not(.active){background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.8);}
+.nav-btn.chart-btn{border-color:rgba(201,169,110,0.3);color:rgba(201,169,110,0.6);}
+.nav-btn.chart-btn.active{background:rgba(201,169,110,0.2);border-color:var(--gold);color:var(--gold);}
 
 /* KANBAN */
-.main-area{flex:1;padding:16px 48px 12px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
-.kanban-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;flex:1;overflow:hidden;transition:opacity 0.35s;min-height:0;}
+.main-area{flex:1;padding:12px 40px 10px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.kanban-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;flex:1;overflow:hidden;transition:opacity 0.35s;min-height:0;}
 .kanban-grid.hidden{opacity:0;}
-.col-wrap{display:flex;flex-direction:column;gap:8px;overflow:hidden;min-height:0;}
-.col-header{padding:9px 14px;border-radius:2px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.col-wrap{display:flex;flex-direction:column;gap:7px;overflow:hidden;min-height:0;}
+.col-header{padding:9px 12px;border-radius:2px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.col-header-left{display:flex;align-items:center;gap:6px;}
+.col-icon{font-size:13px;}
 .col-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:500;}
 .col-count{font-family:'DM Mono',monospace;font-size:13px;padding:1px 8px;border-radius:10px;background:rgba(0,0,0,0.15);}
 
-/* TICKER SCROLL — rolagem suave contínua */
+/* TICKER */
 .ticker-outer{flex:1;overflow:hidden;position:relative;min-height:0;}
 .ticker-inner{display:flex;flex-direction:column;gap:7px;will-change:transform;}
-.ticker-inner.paused{animation-play-state:paused!important;}
 
-/* cartões */
-.task-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:2px;padding:10px 13px;border-left:3px solid transparent;flex-shrink:0;}
-.task-name{font-size:12.5px;line-height:1.45;color:rgba(255,255,255,0.88);font-weight:400;margin-bottom:6px;}
-.task-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
-.task-list{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:2px;font-weight:500;}
+/* CARTÃO */
+.task-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:2px;padding:10px 12px;border-left:3px solid transparent;flex-shrink:0;}
+.task-name{font-size:13px;line-height:1.45;color:rgba(255,255,255,0.9);font-weight:400;margin-bottom:6px;}
+.task-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.status-tag{font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:2px;flex-shrink:0;}
+.task-list-tag{font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500;}
 .task-due{font-size:10px;font-family:'DM Mono',monospace;color:rgba(255,255,255,0.4);}
 .task-due.overdue{color:#E07070;font-weight:500;}
-.task-due.soon{color:#D4A85A;}
-.task-resp{font-size:10px;color:rgba(255,255,255,0.35);margin-left:auto;}
+.task-due.today-cls{color:#D4A85A;font-weight:500;}
+.task-due.soon{color:rgba(255,255,255,0.5);}
 .prio-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.empty-col{color:rgba(255,255,255,0.18);text-align:center;padding:24px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;}
+.resp-tag{font-size:10px;color:rgba(255,255,255,0.55);margin-left:auto;display:flex;align-items:center;gap:3px;}
+.resp-tag::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.3);}
+.no-resp{font-size:9px;color:#E07070;background:rgba(224,112,112,0.15);padding:1px 5px;border-radius:2px;margin-left:auto;}
+.empty-col{color:rgba(255,255,255,0.18);text-align:center;padding:20px 8px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;}
+
+/* CHART VIEW */
+.chart-view{flex:1;display:none;align-items:center;justify-content:center;gap:60px;padding:12px 40px;}
+.chart-view.active{display:flex;}
+.chart-container{display:flex;flex-direction:column;align-items:center;gap:16px;}
+.chart-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:20px;color:var(--cream);letter-spacing:1px;}
+.chart-title em{font-style:italic;color:var(--gold);}
+.chart-canvas-wrap{position:relative;}
+.chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
+.chart-center-num{font-family:'DM Mono',monospace;font-size:32px;font-weight:500;color:var(--cream);line-height:1;}
+.chart-center-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-top:4px;}
+.legend-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;min-width:220px;}
+.legend-item{display:flex;align-items:center;gap:8px;}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.legend-label{font-size:12px;color:rgba(255,255,255,0.7);flex:1;}
+.legend-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--cream);}
 
 /* FOOTER */
-.progress-footer{background:rgba(0,0,0,0.25);padding:7px 48px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.05);}
+.progress-footer{background:rgba(0,0,0,0.25);padding:6px 40px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.05);}
 .footer-left{display:flex;align-items:center;gap:20px;}
-.prog-txt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
-.sync-txt{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);}
+.prog-txt{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.sync-txt{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);}
 .prog-track{width:180px;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;}
 .prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 1s linear;}
 </style>
@@ -83,12 +105,12 @@ html,body{width:100%;height:100vh;background:var(--dark);font-family:'DM Sans',s
 <div class="tv-header">
   <div class="header-left">
     <div>
-      <div class="logo">Gelo<em>crim</em><small>Gestão à Vista</small></div>
+      <div class="logo">Gelo<em>crim</em><small>Painel de Gestão</small></div>
     </div>
-    <div class="area-name" id="area-title">Comercial</div>
+    <div class="area-name" id="area-title">—</div>
   </div>
   <div class="header-right">
-    <div style="display:flex;align-items:center;gap:12px;justify-content:flex-end;">
+    <div class="clock-row">
       <span class="demo-badge" id="demo-badge">Demonstração</span>
       <div class="clock" id="clock">--:--:--</div>
     </div>
@@ -98,22 +120,56 @@ html,body{width:100%;height:100vh;background:var(--dark);font-family:'DM Sans',s
 </div>
 
 <div class="kpi-strip">
+  <div class="kpi-item"><span class="kpi-val" id="k-venc" style="color:#E07070">--</span><span class="kpi-lbl">Vencidas</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-hoje" style="color:#D4A85A">--</span><span class="kpi-lbl">Hoje</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-sem" style="color:#7AABDA">--</span><span class="kpi-lbl">Esta Semana</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-fut" style="color:#9A8ED4">--</span><span class="kpi-lbl">Futuras</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-sd" style="color:#C4B9A8">--</span><span class="kpi-lbl">Sem Data/Resp.</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-done" style="color:#6DBF8A">--</span><span class="kpi-lbl">Concluído</span></div>
+  <div class="kpi-sep"></div>
   <div class="kpi-item"><span class="kpi-val" id="k-total">--</span><span class="kpi-lbl">Total</span></div>
-  <div class="kpi-sep"></div>
-  <div class="kpi-item"><span class="kpi-val" id="k-open" style="color:#6DBF8A">--</span><span class="kpi-lbl">Aberto</span></div>
-  <div class="kpi-sep"></div>
-  <div class="kpi-item"><span class="kpi-val" id="k-prog" style="color:#7AABDA">--</span><span class="kpi-lbl">Andamento</span></div>
-  <div class="kpi-sep"></div>
-  <div class="kpi-item"><span class="kpi-val" id="k-pend" style="color:#D4A85A">--</span><span class="kpi-lbl">Pendente</span></div>
-  <div class="kpi-sep"></div>
-  <div class="kpi-item"><span class="kpi-val" id="k-done" style="color:#C4B9A8">--</span><span class="kpi-lbl">Concluído</span></div>
   <div class="kpi-sep"></div>
   <div class="kpi-item"><span class="kpi-val" id="k-urg" style="color:#E07070">--</span><span class="kpi-lbl">Urgente</span></div>
   <div class="area-nav" id="area-nav"></div>
 </div>
 
 <div class="main-area">
+  <!-- KANBAN -->
   <div class="kanban-grid" id="kanban-grid"></div>
+  <!-- CHART VIEW -->
+  <div class="chart-view" id="chart-view">
+    <div class="chart-container">
+      <div class="chart-title">Atividades <em>Vencidas</em> por Área</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="pizza-chart" width="280" height="280"></canvas>
+        <div class="chart-center">
+          <div class="chart-center-num" id="chart-total">0</div>
+          <div class="chart-center-lbl">Vencidas</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:10px;">Por Área</div>
+        <div class="legend-grid" id="chart-legend"></div>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:10px;">Top Responsáveis com Vencidas</div>
+        <div id="resp-legend" style="display:flex;flex-direction:column;gap:6px;"></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;min-width:260px;">
+      <div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:10px;">Distribuição Geral — Todas as Áreas</div>
+        <div id="status-bars" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="progress-footer">
@@ -125,70 +181,62 @@ html,body{width:100%;height:100vh;background:var(--dark);font-family:'DM Sans',s
 </div>
 
 <script>
-/* ============================================================
-   CONFIGURAÇÃO N8N — alterar quando TI conectar:
-   const N8N_WEBHOOK_URL = 'https://n8n.grupovda.com.br/webhook/gestao-vista';
-   ============================================================ */
 const N8N_WEBHOOK_URL = null;
-const ROTATE_SEC = 60;
-const SYNC_SEC   = 300;
-
-/* Velocidade do ticker: px por segundo — lento para TV */
+const ROTATE_SEC   = 60;
+const SYNC_SEC     = 300;
 const TICKER_SPEED = 22;
+const DONE_DAYS    = 7;
 
 const MOCK_DATA = [
   {name:'Atualizar tabela de preços — Cooperativa',status:'aberto',priority:'normal',list:'Comercial',due:'2026-04-28',assignees:['Haniel']},
-  {name:'Mapear carteira — perfil de consumo por cliente',status:'aberto',priority:'high',list:'Gestão Comercial',due:'2026-04-25',assignees:[]},
-  {name:'Reunião com top 5 clientes em trocas',status:'em andamento',priority:'urgent',list:'Comercial',due:'2026-04-22',assignees:['Albertt']},
-  {name:'Implementar dashboard semanal de indicadores CRM',status:'aberto',priority:'normal',list:'Gestão Comercial',due:'2026-05-02',assignees:[]},
+  {name:'Mapear carteira — perfil de consumo',status:'aberto',priority:'high',list:'Gestão Comercial',due:'2026-04-15',assignees:[]},
+  {name:'Reunião com top 5 clientes em trocas',status:'em andamento',priority:'urgent',list:'Comercial',due:'2026-04-10',assignees:['Albertt']},
+  {name:'Dashboard semanal de indicadores CRM',status:'aberto',priority:'normal',list:'Gestão Comercial',due:'2026-05-10',assignees:[]},
   {name:'Criar roteiro de atendimento CRM',status:'pendente',priority:'normal',list:'Comercial',due:null,assignees:['Stephanie']},
-  {name:'Levantamento clientes PIX — migrar para boleto',status:'completo',priority:null,list:'Comercial',due:null,assignees:[]},
-  {name:'Escalar programa cashback — 4 para 15 clientes',status:'aberto',priority:'high',list:'CRM',due:'2026-04-30',assignees:[]},
-  {name:'Configurar CRM Gelocrim no ClickUp',status:'aberto',priority:'urgent',list:'CRM',due:'2026-04-21',assignees:[]},
+  {name:'Levantamento clientes PIX',status:'completo',priority:null,list:'Comercial',due:'2026-04-22',assignees:['Haniel'],completedAt:'2026-04-22'},
+  {name:'Escalar programa cashback',status:'aberto',priority:'high',list:'CRM',due:'2026-05-02',assignees:[]},
+  {name:'Configurar CRM Gelocrim no ClickUp',status:'aberto',priority:'urgent',list:'CRM',due:'2026-04-12',assignees:[]},
   {name:'Reunião comercial — alinhamento mensal',status:'em andamento',priority:null,list:'Comercial',due:null,assignees:['Albertt','Haniel']},
-  {name:'Tendência de vendas — análise semanal',status:'aberto',priority:null,list:'Comercial',due:'2026-04-26',assignees:['Haniel']},
-  {name:'Discutir metas e ações comerciais',status:'aberto',priority:null,list:'Comercial',due:'2026-04-27',assignees:['Albertt','Haniel']},
+  {name:'Tendência de vendas — análise semanal',status:'aberto',priority:null,list:'Comercial',due:'2026-05-05',assignees:['Haniel']},
+  {name:'Discutir metas e ações comerciais',status:'aberto',priority:null,list:'Comercial',due:'2026-05-08',assignees:['Albertt']},
   {name:'Supermercados da base — mapeamento',status:'aberto',priority:null,list:'Comercial',due:null,assignees:[]},
   {name:'Recuperar principais avenidas',status:'em andamento',priority:'normal',list:'Comercial',due:null,assignees:['Albertt']},
-  {name:'BSC Gelocrim — planejamento estratégico',status:'pendente',priority:null,list:'Comercial',due:null,assignees:['Albertt','Haniel']},
+  {name:'BSC Gelocrim — planejamento estratégico',status:'pendente',priority:null,list:'Comercial',due:null,assignees:[]},
   {name:'Plano de ação 2026',status:'pendente',priority:null,list:'Comercial',due:null,assignees:[]},
-  {name:'Acompanhamento call center',status:'aberto',priority:null,list:'Comercial',due:null,assignees:['Haniel']},
-  {name:'Marketing estratégia 2026',status:'pendente',priority:null,list:'Comercial',due:null,assignees:['Albertt']},
   {name:'Reajuste de preço — acompanhamento',status:'em andamento',priority:null,list:'Comercial',due:null,assignees:[]},
-  {name:'Cotar saco plástico 20kg vs Ráfia',status:'aberto',priority:'normal',list:'Industrial',due:'2026-04-24',assignees:['Simone']},
-  {name:'Solicitar catálogo máquina empacotadora 25kg',status:'aberto',priority:'normal',list:'Industrial',due:'2026-04-25',assignees:[]},
-  {name:'Automação do tombador — máquina de costura',status:'em andamento',priority:null,list:'Industrial',due:'2026-04-23',assignees:['Andrea']},
+  {name:'Cotar saco plástico 20kg vs Ráfia',status:'aberto',priority:'normal',list:'Industrial',due:'2026-04-18',assignees:['Simone']},
+  {name:'Catálogo máquina empacotadora 25kg',status:'aberto',priority:'normal',list:'Industrial',due:'2026-05-06',assignees:[]},
+  {name:'Automação tombador — máquina de costura',status:'em andamento',priority:null,list:'Industrial',due:'2026-04-16',assignees:['Andrea']},
   {name:'Medir eficiência linha de produção',status:'aberto',priority:null,list:'Industrial',due:'2026-05-10',assignees:['Paulo']},
-  {name:'Máquina de Gelo Ice Cube — acompanhamento',status:'em andamento',priority:'urgent',list:'Industrial',due:'2026-04-14',assignees:['Haniel','Albertt']},
-  {name:'Esteira transportadora tipo concha para cubo',status:'em andamento',priority:'urgent',list:'Industrial',due:'2026-04-13',assignees:['Albertt']},
-  {name:'Monitoramento consumo energia elétrica',status:'aberto',priority:null,list:'Industrial',due:'2026-04-20',assignees:['Haniel']},
-  {name:'Análise causa raiz trocas — 5kg, 10kg, 20kg',status:'aberto',priority:'high',list:'Projetos',due:'2026-04-30',assignees:[]},
-  {name:'Análises fisicoquímico microbiológico',status:'completo',priority:null,list:'SGQ',due:'2026-04-17',assignees:[]},
-  {name:'Checagem qualidade produto e peso embalagem',status:'aberto',priority:null,list:'SGQ',due:null,assignees:[]},
+  {name:'Ice Cube — acompanhamento',status:'em andamento',priority:'urgent',list:'Industrial',due:'2026-04-09',assignees:['Haniel']},
+  {name:'Esteira concha para cubo',status:'em andamento',priority:'urgent',list:'Industrial',due:'2026-04-08',assignees:['Albertt']},
+  {name:'Monitoramento energia elétrica',status:'aberto',priority:null,list:'Industrial',due:'2026-05-12',assignees:['Haniel']},
+  {name:'Causa raiz trocas — 5kg 10kg 20kg',status:'aberto',priority:'high',list:'Projetos',due:'2026-05-01',assignees:[]},
+  {name:'Análises fisicoquímico microbiológico',status:'completo',priority:null,list:'SGQ',due:'2026-04-24',assignees:['Paulo'],completedAt:'2026-04-24'},
+  {name:'Checagem qualidade e peso embalagem',status:'completo',priority:null,list:'SGQ',due:'2026-04-23',assignees:['Paulo'],completedAt:'2026-04-23'},
   {name:'Medir eficiência linha ráfia',status:'aberto',priority:null,list:'Industrial',due:null,assignees:['Paulo']},
-  {name:'Cobertura frente ao estoque 01',status:'aberto',priority:'normal',list:'Industrial',due:null,assignees:['Albertt']},
+  {name:'Cobertura frente ao estoque 01',status:'aberto',priority:'normal',list:'Industrial',due:null,assignees:[]},
   {name:'HR — Motor com problema',status:'aberto',priority:'high',list:'Manutenção Frota',due:null,assignees:['Andrea']},
-  {name:'VDA 90 — Caixa de marcha com problema',status:'aberto',priority:'high',list:'Manutenção Frota',due:null,assignees:['Andrea']},
-  {name:'VDA 70 — Revisão preventiva',status:'aberto',priority:'normal',list:'Manutenção Frota',due:null,assignees:['Albertt','Andrea']},
-  {name:'VDA 02 — Verificação geral',status:'aberto',priority:'normal',list:'Manutenção Frota',due:null,assignees:['Albertt','Andrea']},
+  {name:'VDA 90 — Caixa de marcha',status:'aberto',priority:'high',list:'Manutenção Frota',due:null,assignees:['Andrea']},
+  {name:'VDA 70 — Revisão preventiva',status:'aberto',priority:'normal',list:'Manutenção Frota',due:null,assignees:['Albertt']},
+  {name:'VDA 02 — Verificação geral',status:'aberto',priority:'normal',list:'Manutenção Frota',due:null,assignees:['Albertt']},
   {name:'VDA 80 — Aguardando peça',status:'pendente',priority:null,list:'Manutenção Frota',due:null,assignees:['Andrea']},
-  {name:'VDA 01 — Revisão completa',status:'aberto',priority:null,list:'Manutenção Frota',due:null,assignees:['Andrea','Albertt']},
-  {name:'VDA 47 — Manutenção programada',status:'aberto',priority:'normal',list:'Manutenção Frota',due:null,assignees:['Andrea','Albertt']},
-  {name:'VDA 66 — Verificação sistema elétrico',status:'aberto',priority:'normal',list:'Manutenção Frota',due:null,assignees:['Andrea','Albertt']},
-  {name:'Urgências em equipamentos industriais',status:'aberto',priority:'urgent',list:'Manutenção Equip.',due:null,assignees:['Andrea','Albertt']},
-  {name:'Preventivas 2026 — cronograma geral',status:'aberto',priority:null,list:'Manutenção Equip.',due:null,assignees:['Albertt','Andrea']},
-  {name:'Proposta recuperação minicâmara 5 ton pátio',status:'aberto',priority:'normal',list:'Manutenção Equip.',due:null,assignees:['Albertt','Andrea']},
-  {name:'Adesivar caminhões — frota completa',status:'aberto',priority:null,list:'Manutenção Frota',due:null,assignees:['Albertt','Andrea']},
-  {name:'Lançar piloto B2C moto — Ponta Negra',status:'aberto',priority:'urgent',list:'Projetos',due:'2026-04-30',assignees:[]},
-  {name:'Definir raio geográfico piloto B2C',status:'aberto',priority:'urgent',list:'Projetos',due:'2026-04-19',assignees:[]},
-  {name:'Criar política formal de trocas e avarias',status:'aberto',priority:'high',list:'Projetos',due:'2026-04-30',assignees:[]},
-  {name:'Levantar diagnóstico top 20 clientes — trade',status:'aberto',priority:'high',list:'Projetos',due:'2026-04-30',assignees:[]},
-  {name:'Criar 3 kits visuais trade marketing',status:'aberto',priority:'high',list:'Projetos',due:'2026-04-30',assignees:[]},
-  {name:'Selecionar zona piloto roteirização',status:'aberto',priority:'high',list:'Projetos',due:'2026-04-30',assignees:[]},
+  {name:'VDA 01 — Revisão completa',status:'aberto',priority:null,list:'Manutenção Frota',due:null,assignees:[]},
+  {name:'VDA 47 — Manutenção programada',status:'aberto',priority:'normal',list:'Manutenção Frota',due:null,assignees:['Andrea']},
+  {name:'Urgências equipamentos industriais',status:'aberto',priority:'urgent',list:'Manutenção Equip.',due:null,assignees:['Andrea']},
+  {name:'Preventivas 2026 — cronograma',status:'aberto',priority:null,list:'Manutenção Equip.',due:null,assignees:['Albertt']},
+  {name:'Recuperação minicâmara 5 ton pátio',status:'aberto',priority:'normal',list:'Manutenção Equip.',due:null,assignees:['Albertt']},
+  {name:'Adesivar caminhões — frota completa',status:'aberto',priority:null,list:'Manutenção Frota',due:null,assignees:[]},
+  {name:'Piloto B2C moto — Ponta Negra',status:'aberto',priority:'urgent',list:'Projetos',due:'2026-05-01',assignees:[]},
+  {name:'Raio geográfico piloto B2C',status:'aberto',priority:'urgent',list:'Projetos',due:'2026-04-14',assignees:[]},
+  {name:'Política formal de trocas e avarias',status:'aberto',priority:'high',list:'Projetos',due:'2026-05-01',assignees:[]},
+  {name:'Diagnóstico top 20 clientes — trade',status:'aberto',priority:'high',list:'Projetos',due:'2026-05-01',assignees:[]},
+  {name:'3 kits visuais trade marketing',status:'aberto',priority:'high',list:'Projetos',due:'2026-05-01',assignees:[]},
+  {name:'Zona piloto roteirização',status:'aberto',priority:'high',list:'Projetos',due:'2026-05-01',assignees:[]},
   {name:'Projeto autoatendimento Gelocrim',status:'aberto',priority:null,list:'Projetos',due:'2026-05-04',assignees:['Albertt']},
-  {name:'Pagamento código de barras SGQ',status:'aberto',priority:null,list:'SGQ',due:'2026-06-15',assignees:['Haniel','Paulo']},
-  {name:'Gestão de redução energia elétrica',status:'em andamento',priority:'high',list:'Industrial',due:null,assignees:['Albertt','Haniel']},
-  {name:'Sacarias almoxarifado — levantamento',status:'aberto',priority:null,list:'Estoque',due:'2026-04-20',assignees:['Haniel']},
+  {name:'Pagamento código de barras SGQ',status:'aberto',priority:null,list:'SGQ',due:'2026-06-15',assignees:['Haniel']},
+  {name:'Gestão de redução energia elétrica',status:'em andamento',priority:'high',list:'Industrial',due:null,assignees:['Albertt']},
+  {name:'Sacarias almoxarifado — levantamento',status:'completo',priority:null,list:'Estoque',due:'2026-04-25',assignees:['Haniel'],completedAt:'2026-04-25'},
 ];
 
 const AREAS = [
@@ -197,246 +245,353 @@ const AREAS = [
   {key:'manutencao', label:'Manutenção',               color:'#7AABDA', lists:['Manutenção Frota','Manutenção Equip.']},
   {key:'projetos',   label:'Projetos & Plano de Ação', color:'#9A8ED4', lists:['Projetos']},
   {key:'geral',      label:'Operacional Geral',        color:'#D4826E', lists:['__geral__']},
+  {key:'chart',      label:'Visão Geral ◉',            color:'#C9A96E', lists:[], isChart:true},
+];
+
+const COLS = [
+  {key:'vencidas', icon:'🔴', label:'Vencidas',      bg:'rgba(224,112,112,0.13)', col:'#E07070', countBg:'rgba(224,112,112,0.2)', border:'#E07070'},
+  {key:'hoje',     icon:'🟡', label:'Hoje',           bg:'rgba(212,168,90,0.11)',  col:'#D4A85A', countBg:'rgba(212,168,90,0.2)',  border:'#D4A85A'},
+  {key:'semana',   icon:'🔵', label:'Esta Semana',    bg:'rgba(122,171,218,0.11)', col:'#7AABDA', countBg:'rgba(122,171,218,0.2)', border:'#7AABDA'},
+  {key:'futuras',  icon:'🟣', label:'Futuras',        bg:'rgba(154,142,212,0.11)', col:'#9A8ED4', countBg:'rgba(154,142,212,0.2)', border:'#9A8ED4'},
+  {key:'sem-data', icon:'⚪', label:'Sem Data/Resp.', bg:'rgba(196,185,168,0.08)', col:'#C4B9A8', countBg:'rgba(196,185,168,0.15)',border:'#8C8378'},
+  {key:'concluido',icon:'✅', label:'Concluído (7d)', bg:'rgba(109,191,138,0.11)', col:'#6DBF8A', countBg:'rgba(109,191,138,0.2)', border:'#6DBF8A'},
 ];
 
 const STATUS_CFG = {
-  aberto:        {label:'Aberto',       bg:'rgba(109,191,138,0.11)',col:'#6DBF8A',border:'#6DBF8A'},
-  'em andamento':{label:'Em Andamento', bg:'rgba(122,171,218,0.11)',col:'#7AABDA',border:'#7AABDA'},
-  pendente:      {label:'Pendente',     bg:'rgba(212,168,90,0.11)', col:'#D4A85A',border:'#D4A85A'},
-  completo:      {label:'Concluído',    bg:'rgba(196,185,168,0.08)',col:'#C4B9A8',border:'#8C8378'},
+  'aberto':       {label:'Aberto',       bg:'rgba(109,191,138,0.15)',col:'#6DBF8A'},
+  'open':         {label:'Aberto',       bg:'rgba(109,191,138,0.15)',col:'#6DBF8A'},
+  'em andamento': {label:'Em Andamento', bg:'rgba(122,171,218,0.15)',col:'#7AABDA'},
+  'in progress':  {label:'Em Andamento', bg:'rgba(122,171,218,0.15)',col:'#7AABDA'},
+  'pendente':     {label:'Pendente',     bg:'rgba(212,168,90,0.15)', col:'#D4A85A'},
+  'completo':     {label:'Concluído',    bg:'rgba(109,191,138,0.1)', col:'#6DBF8A'},
+  'done':         {label:'Concluído',    bg:'rgba(109,191,138,0.1)', col:'#6DBF8A'},
 };
-const STATUS_KEYS = ['aberto','em andamento','pendente','completo'];
-const PRIO_COLOR  = {urgent:'#E07070',high:'#D4A85A',normal:'#7AABDA',low:'#8C8378'};
+const PRIO_COLOR = {urgent:'#E07070',high:'#D4A85A',normal:'#7AABDA',low:'#8C8378'};
 
-let allTasks = [];
-let currentArea = 0;
+let allTasks=[];
+let currentArea=0;
 let cdTimer;
-let countdown = ROTATE_SEC;
-const tickerAnimations = new Map();
+let countdown=ROTATE_SEC;
 
-function norm(s){ return (s||'').toLowerCase().trim(); }
+function norm(s){return(s||'').toLowerCase().trim();}
+function today(){return new Date(new Date().toDateString());}
 
-function fmtDue(str){
-  if(!str) return null;
-  const d = new Date(str);
-  const diff = Math.floor((d - Date.now()) / 86400000);
-  const label = d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
-  if(diff < 0)  return {str:label, cls:'overdue'};
-  if(diff <= 3) return {str:label, cls:'soon'};
-  return {str:label, cls:''};
+function classifyTask(t){
+  const done=['completo','done'];
+  const s=norm(t.status);
+  if(done.includes(s)){return 'concluido';}
+  const semData=!t.due;
+  const semResp=!t.assignees||t.assignees.length===0;
+  if(semData||semResp) return 'sem-data';
+  const d=new Date(t.due);
+  const diff=Math.floor((d-today())/86400000);
+  if(diff<0)  return 'vencidas';
+  if(diff===0) return 'hoje';
+  if(diff<=7)  return 'semana';
+  return 'futuras';
 }
 
-function buildCard(task, areaColor) {
-  const card = document.createElement('div');
-  card.className = 'task-card';
-  card.style.borderLeftColor = areaColor;
-  const due  = task.due ? fmtDue(task.due) : null;
-  const ac   = task.assignees?.length || 0;
-  const listShort = (task.list||'').length > 20 ? (task.list||'').slice(0,20)+'…' : (task.list||'');
-  card.innerHTML = `
+function fmtDue(str){
+  if(!str)return null;
+  const d=new Date(str);
+  const diff=Math.floor((d-today())/86400000);
+  const label=d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  if(diff<0)  return{str:label,cls:'overdue'};
+  if(diff===0)return{str:'Hoje',cls:'today-cls'};
+  return{str:label,cls:'soon'};
+}
+
+function buildCard(task,areaColor){
+  const card=document.createElement('div');
+  card.className='task-card';
+  card.style.borderLeftColor=areaColor;
+  const s=norm(task.status);
+  const stCfg=STATUS_CFG[s]||{label:s,bg:'rgba(255,255,255,0.1)',col:'#C4B9A8'};
+  const due=task.due?fmtDue(task.due):null;
+  const noResp=!task.assignees||task.assignees.length===0;
+  const respNames=(task.assignees||[]).join(', ');
+  const ls=(task.list||'').length>16?(task.list||'').slice(0,16)+'…':(task.list||'');
+  card.innerHTML=`
     <div class="task-name">${task.name}</div>
     <div class="task-meta">
-      <span class="task-list" style="background:${areaColor}22;color:${areaColor}">${listShort}</span>
-      ${task.priority ? `<span class="prio-dot" style="background:${PRIO_COLOR[task.priority]||'#8C8378'}" title="${task.priority}"></span>` : ''}
-      ${due ? `<span class="task-due ${due.cls}">${due.str}</span>` : ''}
-      ${ac > 0 ? `<span class="task-resp">${ac} resp.</span>` : ''}
+      <span class="status-tag" style="background:${stCfg.bg};color:${stCfg.col}">${stCfg.label}</span>
+      <span class="task-list-tag" style="background:${areaColor}22;color:${areaColor}">${ls}</span>
+      ${task.priority?`<span class="prio-dot" style="background:${PRIO_COLOR[task.priority]}"></span>`:''}
+      ${due?`<span class="task-due ${due.cls}">${due.str}</span>`:''}
+      ${noResp
+        ?`<span class="no-resp">Sem responsável</span>`
+        :`<span class="resp-tag">${respNames}</span>`}
     </div>`;
   return card;
 }
 
-/* ---- Ticker: rolagem suave contínua ---- */
-function setupTicker(outerEl, cards, areaColor) {
-  if(!cards.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty-col';
-    empty.textContent = 'nenhuma tarefa';
-    outerEl.appendChild(empty);
+function setupTicker(outerEl,cards,areaColor){
+  if(!cards.length){
+    const e=document.createElement('div');e.className='empty-col';e.textContent='Nenhuma tarefa';
+    outerEl.appendChild(e);return;
+  }
+  const inner=document.createElement('div');inner.className='ticker-inner';
+  cards.forEach(t=>inner.appendChild(buildCard(t,areaColor)));
+  outerEl.appendChild(inner);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const oH=outerEl.clientHeight,iH=inner.scrollHeight;
+    if(iH<=oH)return;
+    cards.forEach(t=>inner.appendChild(buildCard(t,areaColor)));
+    const dur=(inner.scrollHeight/2)/TICKER_SPEED;
+    inner.style.animation=`tickerScroll ${dur}s linear infinite`;
+    if(!document.getElementById('ticker-kf')){
+      const s=document.createElement('style');s.id='ticker-kf';
+      s.textContent=`@keyframes tickerScroll{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}`;
+      document.head.appendChild(s);
+    }
+  }));
+}
+
+/* ---- GRÁFICO ---- */
+function drawPizza(){
+  const canvas=document.getElementById('pizza-chart');
+  const ctx=canvas.getContext('2d');
+  const cx=140,cy=140,r=120,rIn=70;
+
+  // vencidas por área
+  const areaAreas=AREAS.filter(a=>!a.isChart);
+  const data=areaAreas.map(area=>{
+    const tasks=getAreaTasks(area);
+    const v=tasks.filter(t=>classifyTask(t)==='vencidas').length;
+    return{label:area.label,color:area.color,value:v};
+  }).filter(d=>d.value>0);
+
+  const total=data.reduce((s,d)=>s+d.value,0);
+  document.getElementById('chart-total').textContent=total;
+
+  ctx.clearRect(0,0,280,280);
+  if(total===0){
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=50;ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='14px DM Sans';ctx.textAlign='center';
+    ctx.fillText('Sem vencidas',cx,cy+5);
     return;
   }
 
-  const inner = document.createElement('div');
-  inner.className = 'ticker-inner';
+  let angle=-Math.PI/2;
+  data.forEach(d=>{
+    const slice=(d.value/total)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();ctx.fillStyle=d.color;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,rIn,0,Math.PI*2);
+    ctx.fillStyle='#2C2825';ctx.fill();
+    angle+=slice;
+  });
 
-  // popula os cartões
-  cards.forEach(t => inner.appendChild(buildCard(t, areaColor)));
-  outerEl.appendChild(inner);
+  // bordas
+  angle=-Math.PI/2;
+  data.forEach(d=>{
+    const slice=(d.value/total)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();ctx.strokeStyle='#2C2825';ctx.lineWidth=2;ctx.stroke();
+    angle+=slice;
+  });
 
-  // aguarda render para medir altura real
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const outerH  = outerEl.clientHeight;
-      const innerH  = inner.scrollHeight;
+  // legenda por área
+  const leg=document.getElementById('chart-legend');
+  leg.innerHTML='';
+  areaAreas.forEach(area=>{
+    const v=data.find(d=>d.label===area.label)?.value||0;
+    const pct=total>0?Math.round(v/total*100):0;
+    leg.innerHTML+=`<div class="legend-item">
+      <div class="legend-dot" style="background:${area.color}"></div>
+      <span class="legend-label">${area.label.replace(' & Produção','').replace(' & Plano de Ação','')}</span>
+      <span class="legend-val">${v} <span style="font-size:10px;color:var(--taupe)">${pct}%</span></span>
+    </div>`;
+  });
 
-      // se tudo cabe, não precisa rolar
-      if(innerH <= outerH) return;
+  // top responsáveis com vencidas
+  const respMap={};
+  allTasks.filter(t=>classifyTask(t)==='vencidas').forEach(t=>{
+    (t.assignees||[]).forEach(r=>{ respMap[r]=(respMap[r]||0)+1; });
+    if(!t.assignees||t.assignees.length===0) respMap['Sem responsável']=(respMap['Sem responsável']||0)+1;
+  });
+  const topResp=Object.entries(respMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const respLeg=document.getElementById('resp-legend');
+  respLeg.innerHTML='';
+  topResp.forEach(([name,val])=>{
+    const pct=total>0?Math.round(val/total*100):0;
+    const barW=Math.round(val/total*100);
+    respLeg.innerHTML+=`<div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="display:flex;justify-content:space-between;">
+        <span style="font-size:12px;color:rgba(255,255,255,0.7)">${name}</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--cream)">${val}</span>
+      </div>
+      <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;">
+        <div style="height:100%;width:${barW}%;background:var(--gold);border-radius:2px;"></div>
+      </div>
+    </div>`;
+  });
 
-      // duplica os cartões para loop contínuo
-      cards.forEach(t => inner.appendChild(buildCard(t, areaColor)));
-
-      const totalH = inner.scrollHeight / 2;
-      const duration = totalH / TICKER_SPEED; // segundos
-
-      inner.style.animation = `tickerScroll ${duration}s linear infinite`;
-
-      // injeta keyframe dinamicamente uma única vez
-      if(!document.getElementById('ticker-kf')) {
-        const style = document.createElement('style');
-        style.id = 'ticker-kf';
-        style.textContent = `@keyframes tickerScroll { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }`;
-        document.head.appendChild(style);
-      }
-
-      tickerAnimations.set(outerEl, inner);
-    });
+  // barras de distribuição geral
+  const allGroups={vencidas:0,hoje:0,semana:0,futuras:0,'sem-data':0,concluido:0};
+  allTasks.forEach(t=>{const k=classifyTask(t);if(k)allGroups[k]++;});
+  const totalAll=allTasks.length||1;
+  const bars=[
+    {key:'vencidas',label:'Vencidas',color:'#E07070'},
+    {key:'hoje',    label:'Hoje',    color:'#D4A85A'},
+    {key:'semana',  label:'Semana',  color:'#7AABDA'},
+    {key:'futuras', label:'Futuras', color:'#9A8ED4'},
+    {key:'sem-data',label:'Sem Data/Resp.',color:'#C4B9A8'},
+    {key:'concluido',label:'Concluído',color:'#6DBF8A'},
+  ];
+  const sb=document.getElementById('status-bars');
+  sb.innerHTML='';
+  bars.forEach(b=>{
+    const v=allGroups[b.key]||0;
+    const pct=Math.round(v/totalAll*100);
+    const barW=Math.round(v/totalAll*100);
+    sb.innerHTML+=`<div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:rgba(255,255,255,0.7)">${b.label}</span>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--cream)">${v} <span style="font-size:10px;color:var(--taupe)">${pct}%</span></span>
+      </div>
+      <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:${barW}%;background:${b.color};border-radius:3px;transition:width 0.6s ease;"></div>
+      </div>
+    </div>`;
   });
 }
 
-/* ---- Dados ---- */
+/* ---- DADOS ---- */
 async function fetchTasks(){
   if(N8N_WEBHOOK_URL){
     try{
-      const r = await fetch(N8N_WEBHOOK_URL);
-      const d = await r.json();
-      document.getElementById('sync-txt').textContent = 'Sincronizado às ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-      document.getElementById('demo-badge').style.display = 'none';
+      const r=await fetch(N8N_WEBHOOK_URL);const d=await r.json();
+      document.getElementById('sync-txt').textContent='Sincronizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('demo-badge').style.display='none';
       return d;
-    } catch(e){
-      document.getElementById('sync-txt').textContent = 'Erro N8N — tentando novamente...';
-      return allTasks.length ? allTasks : MOCK_DATA;
+    }catch(e){
+      document.getElementById('sync-txt').textContent='Erro N8N — tentando novamente...';
+      return allTasks.length?allTasks:MOCK_DATA;
     }
   }
   return MOCK_DATA;
 }
 
 function getAreaTasks(area){
-  if(area.key === 'geral'){
-    const allListed = AREAS.filter(a=>a.key!=='geral').flatMap(a=>a.lists);
-    return allTasks.filter(t => !allListed.includes(t.list));
+  if(area.key==='geral'){
+    const all=AREAS.filter(a=>!a.isChart&&a.key!=='geral').flatMap(a=>a.lists);
+    return allTasks.filter(t=>!all.includes(t.list));
   }
-  return allTasks.filter(t => area.lists.includes(t.list));
+  return allTasks.filter(t=>area.lists.includes(t.list));
 }
 
 function renderKPIs(tasks){
-  document.getElementById('k-total').textContent = tasks.length;
-  document.getElementById('k-open').textContent  = tasks.filter(t=>norm(t.status)==='aberto').length;
-  document.getElementById('k-prog').textContent  = tasks.filter(t=>norm(t.status)==='em andamento').length;
-  document.getElementById('k-pend').textContent  = tasks.filter(t=>norm(t.status)==='pendente').length;
-  document.getElementById('k-done').textContent  = tasks.filter(t=>norm(t.status)==='completo').length;
-  document.getElementById('k-urg').textContent   = tasks.filter(t=>t.priority==='urgent').length;
+  const g={vencidas:0,hoje:0,semana:0,futuras:0,'sem-data':0,concluido:0};
+  tasks.forEach(t=>{const k=classifyTask(t);if(k)g[k]++;});
+  document.getElementById('k-venc').textContent=g.vencidas;
+  document.getElementById('k-hoje').textContent=g.hoje;
+  document.getElementById('k-sem').textContent=g.semana;
+  document.getElementById('k-fut').textContent=g.futuras;
+  document.getElementById('k-sd').textContent=g['sem-data'];
+  document.getElementById('k-done').textContent=g.concluido;
+  document.getElementById('k-total').textContent=tasks.length;
+  document.getElementById('k-urg').textContent=tasks.filter(t=>t.priority==='urgent').length;
+  return g;
 }
 
 function buildNav(){
-  document.getElementById('nav-dots').innerHTML = AREAS.map((_,i)=>
-    `<span class="dot${i===currentArea?' active':''}" onclick="jumpArea(${i})"></span>`).join('');
-  document.getElementById('area-nav').innerHTML = AREAS.map((a,i)=>
-    `<button class="nav-btn${i===currentArea?' active':''}" onclick="jumpArea(${i})">${a.label}</button>`).join('');
+  document.getElementById('nav-dots').innerHTML=AREAS.filter(a=>!a.isChart).map((_,i)=>
+    `<span class="dot${i===currentArea?' active':''}" onclick="jumpArea(${i})"></span>`).join('')+
+    `<span class="dot${currentArea===AREAS.length-1?' active':''}" style="background:${currentArea===AREAS.length-1?'var(--gold)':'rgba(201,169,110,0.3)'}" onclick="jumpArea(${AREAS.length-1})"></span>`;
+
+  document.getElementById('area-nav').innerHTML=AREAS.map((a,i)=>
+    `<button class="nav-btn${i===currentArea?' active':''}${a.isChart?' chart-btn':''}" onclick="jumpArea(${i})">${a.label}</button>`
+  ).join('');
 }
 
 function renderArea(idx){
-  const area  = AREAS[idx];
-  const tasks = getAreaTasks(area);
+  const area=AREAS[idx];
+  const isChart=!!area.isChart;
 
-  const title = document.getElementById('area-title');
-  title.style.opacity = '0';
+  const title=document.getElementById('area-title');
+  title.style.opacity='0';
   setTimeout(()=>{
-    title.innerHTML = area.label.replace('&','<em style="color:var(--gold)"> & </em>');
-    title.style.opacity = '1';
-  }, 250);
+    title.innerHTML=area.label.replace('&','<em style="color:var(--gold)"> & </em>').replace('◉','<em style="color:var(--gold)">◉</em>');
+    title.style.opacity='1';
+  },250);
 
-  renderKPIs(tasks);
-  tickerAnimations.clear();
+  const kanban=document.getElementById('kanban-grid');
+  const chartV=document.getElementById('chart-view');
 
-  // agrupar
-  const groups = {};
-  STATUS_KEYS.forEach(s => groups[s]=[]);
-  tasks.forEach(t=>{
-    const s = norm(t.status);
-    if(groups[s] !== undefined) groups[s].push(t);
-    else groups['aberto'].push(t);
-  });
+  if(isChart){
+    kanban.classList.add('hidden');
+    kanban.style.display='none';
+    chartV.classList.add('active');
+    renderKPIs(allTasks);
+    setTimeout(drawPizza,350);
+  } else {
+    chartV.classList.remove('active');
+    kanban.style.display='';
 
-  const grid = document.getElementById('kanban-grid');
-  grid.classList.add('hidden');
+    const tasks=getAreaTasks(area);
+    const g=renderKPIs(tasks);
 
-  setTimeout(()=>{
-    grid.innerHTML = '';
+    kanban.classList.add('hidden');
+    setTimeout(()=>{
+      kanban.innerHTML='';
+      COLS.forEach(col=>{
+        const tasks2=getAreaTasks(area);
+        const grouped={};COLS.forEach(c=>grouped[c.key]=[]);
+        tasks2.forEach(t=>{const k=classifyTask(t);if(k&&grouped[k])grouped[k].push(t);});
 
-    STATUS_KEYS.forEach(status=>{
-      const cfg = STATUS_CFG[status];
-      const col = document.createElement('div');
-      col.className = 'col-wrap';
+        const wrap=document.createElement('div');wrap.className='col-wrap';
+        const hdr=document.createElement('div');hdr.className='col-header';
+        hdr.style.background=col.bg;
+        hdr.innerHTML=`<div class="col-header-left"><span class="col-icon">${col.icon}</span><span class="col-title" style="color:${col.col}">${col.label}</span></div>
+                       <span class="col-count" style="background:${col.countBg};color:${col.col}">${grouped[col.key].length}</span>`;
+        wrap.appendChild(hdr);
+        const outer=document.createElement('div');outer.className='ticker-outer';
+        setupTicker(outer,grouped[col.key],area.color);
+        wrap.appendChild(outer);
+        kanban.appendChild(wrap);
+      });
+      kanban.classList.remove('hidden');
+      document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+      document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+    },300);
+  }
 
-      // header
-      const hdr = document.createElement('div');
-      hdr.className = 'col-header';
-      hdr.style.cssText = `background:${cfg.bg};border-left:3px solid ${cfg.border};`;
-      hdr.innerHTML = `<span class="col-title" style="color:${cfg.col}">${cfg.label}</span>
-                       <span class="col-count" style="color:${cfg.col}">${groups[status].length}</span>`;
-      col.appendChild(hdr);
-
-      // ticker outer
-      const outer = document.createElement('div');
-      outer.className = 'ticker-outer';
-      setupTicker(outer, groups[status], area.color);
-      col.appendChild(outer);
-
-      grid.appendChild(col);
-    });
-
-    grid.classList.remove('hidden');
-
-    document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-    document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  }, 300);
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
 }
 
 function startCountdown(){
-  clearInterval(cdTimer);
-  countdown = ROTATE_SEC;
-  const fill = document.getElementById('prog-fill');
-  const txt  = document.getElementById('prog-txt');
-  fill.style.width = '100%';
-  cdTimer = setInterval(()=>{
+  clearInterval(cdTimer);countdown=ROTATE_SEC;
+  const fill=document.getElementById('prog-fill'),txt=document.getElementById('prog-txt');
+  fill.style.width='100%';
+  cdTimer=setInterval(()=>{
     countdown--;
-    fill.style.width = Math.round(countdown / ROTATE_SEC * 100) + '%';
-    txt.textContent  = `Próxima área em ${countdown}s`;
-    if(countdown <= 0){
-      clearInterval(cdTimer);
-      currentArea = (currentArea + 1) % AREAS.length;
-      renderArea(currentArea);
-      startCountdown();
-    }
+    fill.style.width=Math.round(countdown/ROTATE_SEC*100)+'%';
+    txt.textContent=`Próxima área em ${countdown}s`;
+    if(countdown<=0){clearInterval(cdTimer);currentArea=(currentArea+1)%AREAS.length;renderArea(currentArea);startCountdown();}
   },1000);
 }
 
-function jumpArea(idx){
-  currentArea = idx;
-  renderArea(currentArea);
-  startCountdown();
-}
+function jumpArea(idx){currentArea=idx;renderArea(currentArea);startCountdown();}
 
 function updateClock(){
-  const n = new Date();
-  document.getElementById('clock').textContent    = n.toLocaleTimeString('pt-BR');
-  document.getElementById('date-lbl').textContent = n.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+  const n=new Date();
+  document.getElementById('clock').textContent=n.toLocaleTimeString('pt-BR');
+  document.getElementById('date-lbl').textContent=n.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
 }
 
-async function syncData(){
-  allTasks = await fetchTasks();
-  renderArea(currentArea);
-}
+async function syncData(){allTasks=await fetchTasks();renderArea(currentArea);}
 
 async function init(){
-  allTasks = await fetchTasks();
-  buildNav();
-  renderArea(currentArea);
-  startCountdown();
-  setInterval(syncData, SYNC_SEC * 1000);
+  allTasks=await fetchTasks();buildNav();renderArea(currentArea);startCountdown();
+  setInterval(syncData,SYNC_SEC*1000);
 }
 
-setInterval(updateClock, 1000);
-updateClock();
-init();
+setInterval(updateClock,1000);updateClock();init();
 </script>
 </body>
 </html>
