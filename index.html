@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão à Vista — Gelocrim</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF8F4;--taupe:#C4B9A8;--dark:#2C2825;--gold:#C9A96E;--geo:#7A2E22;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100vh;background:var(--dark);font-family:'DM Sans',sans-serif;overflow:hidden;display:flex;flex-direction:column;}
+.tv-header{background:var(--dark);padding:11px 36px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.07);}
+.header-left{display:flex;align-items:center;gap:18px;}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:21px;color:var(--cream);line-height:1;}
+.logo em{font-style:italic;color:var(--gold);}
+.logo small{display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-top:2px;font-family:'DM Sans',sans-serif;}
+.area-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:32px;color:var(--cream);border-left:2px solid var(--gold);padding-left:18px;line-height:1;transition:opacity 0.3s;}
+.area-name em{font-style:italic;color:var(--gold);}
+.header-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px;}
+.clock{font-family:'DM Mono',monospace;font-size:24px;color:var(--cream);line-height:1;}
+.date-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.nav-dots{display:flex;gap:5px;align-items:center;justify-content:flex-end;margin-top:3px;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s;cursor:pointer;}
+.dot.active{background:var(--gold);transform:scale(1.3);}
+.kpi-strip{background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07);padding:7px 36px;display:flex;gap:0;align-items:center;flex-shrink:0;}
+.kpi-item{display:flex;flex-direction:column;align-items:center;min-width:66px;padding:0 10px;}
+.kpi-item:first-child{padding-left:0;}
+.kpi-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--cream);line-height:1;}
+.kpi-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--taupe);margin-top:2px;}
+.kpi-sep{width:1px;height:32px;background:rgba(255,255,255,0.08);}
+.area-nav{display:flex;gap:4px;align-items:center;margin-left:auto;padding-left:12px;flex-wrap:wrap;}
+.nav-btn{padding:4px 10px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.12);background:transparent;border-radius:2px;cursor:pointer;color:rgba(255,255,255,0.4);font-family:'DM Sans',sans-serif;transition:all 0.2s;white-space:nowrap;}
+.nav-btn.active{background:var(--geo);color:#fff;border-color:var(--geo);}
+.nav-btn:hover:not(.active){background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.8);}
+.nav-btn.chart-btn.active{background:rgba(201,169,110,0.15);border-color:var(--gold);color:var(--gold);}
+.main-area{flex:1;padding:11px 36px 9px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.kanban-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;flex:1;overflow:hidden;transition:opacity 0.3s;min-height:0;}
+.kanban-grid.hidden{opacity:0;}
+.col-wrap{display:flex;flex-direction:column;gap:6px;overflow:hidden;min-height:0;}
+.col-header{padding:8px 11px;border-radius:2px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.col-hl{display:flex;align-items:center;gap:5px;}
+.col-title{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;}
+.col-count{font-family:'DM Mono',monospace;font-size:12px;padding:1px 7px;border-radius:10px;background:rgba(0,0,0,0.15);}
+.ticker-outer{flex:1;overflow:hidden;position:relative;min-height:0;}
+.ticker-inner{display:flex;flex-direction:column;gap:6px;will-change:transform;}
+.task-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:2px;padding:9px 11px;border-left:3px solid transparent;flex-shrink:0;}
+.task-name{font-size:12px;line-height:1.4;color:rgba(255,255,255,0.9);font-weight:400;margin-bottom:5px;}
+.task-meta{display:flex;gap:4px;align-items:center;flex-wrap:wrap;}
+.stag{font-size:9px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;padding:2px 5px;border-radius:2px;flex-shrink:0;}
+.ltag{font-size:9px;letter-spacing:.8px;text-transform:uppercase;padding:2px 5px;border-radius:2px;font-weight:500;}
+.task-due{font-size:10px;font-family:'DM Mono',monospace;color:rgba(255,255,255,0.4);}
+.task-due.overdue{color:#E07070;font-weight:500;}
+.task-due.today-cls{color:#D4A85A;font-weight:500;}
+.pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.resp{font-size:10px;color:rgba(255,255,255,0.5);margin-left:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;}
+.no-resp{font-size:9px;color:#E07070;background:rgba(224,112,112,0.15);padding:1px 5px;border-radius:2px;margin-left:auto;}
+.empty-col{color:rgba(255,255,255,0.18);text-align:center;padding:18px 6px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;}
+.chart-view{flex:1;display:none;align-items:center;justify-content:center;gap:44px;padding:10px 36px;}
+.chart-view.active{display:flex;}
+.chart-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:18px;color:var(--cream);letter-spacing:1px;margin-bottom:10px;}
+.chart-title em{font-style:italic;color:var(--gold);}
+.chart-canvas-wrap{position:relative;}
+.chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
+.ccnum{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--cream);line-height:1;}
+.cclbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-top:2px;}
+.leg-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;}
+.leg-item{display:flex;align-items:center;gap:6px;}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.leg-lbl{font-size:11px;color:rgba(255,255,255,0.6);flex:1;}
+.leg-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--cream);}
+.progress-footer{background:rgba(0,0,0,0.25);padding:5px 36px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.05);}
+.prog-txt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.sync-txt{font-size:10px;color:rgba(255,255,255,0.2);}
+.prog-track{width:160px;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;}
+.prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 1s linear;}
+</style>
+</head>
+<body>
+<div class="tv-header">
+  <div class="header-left">
+    <div><div class="logo">Gelo<em>crim</em><small>Painel de Gestão</small></div></div>
+    <div class="area-name" id="area-title">—</div>
+  </div>
+  <div class="header-right">
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="date-lbl" id="date-lbl">--/--/----</div>
+    <div class="nav-dots" id="nav-dots"></div>
+  </div>
+</div>
+<div class="kpi-strip">
+  <div class="kpi-item"><span class="kpi-val" id="k-venc" style="color:#E07070">--</span><span class="kpi-lbl">Vencidas</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-hoje" style="color:#D4A85A">--</span><span class="kpi-lbl">Hoje</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-sem" style="color:#7AABDA">--</span><span class="kpi-lbl">Esta Semana</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-fut" style="color:#9A8ED4">--</span><span class="kpi-lbl">Futuras</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-sd" style="color:#C4B9A8">--</span><span class="kpi-lbl">Sem Data/Resp.</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-done" style="color:#6DBF8A">--</span><span class="kpi-lbl">Concluído</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-total">--</span><span class="kpi-lbl">Total</span></div>
+  <div class="kpi-sep"></div>
+  <div class="kpi-item"><span class="kpi-val" id="k-urg" style="color:#E07070">--</span><span class="kpi-lbl">Urgente</span></div>
+  <div class="area-nav" id="area-nav"></div>
+</div>
+<div class="main-area">
+  <div class="kanban-grid" id="kanban-grid"></div>
+  <div class="chart-view" id="chart-view">
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div class="chart-title">Vencidas por <em>Área</em></div>
+      <div class="chart-canvas-wrap">
+        <canvas id="pizza-chart" width="230" height="230"></canvas>
+        <div class="chart-center"><div class="ccnum" id="chart-total">0</div><div class="cclbl">Vencidas</div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:6px;">Por Área</div><div class="leg-grid" id="chart-legend"></div></div>
+      <div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:6px;">Top Responsáveis</div><div id="resp-legend" style="display:flex;flex-direction:column;gap:5px;min-width:190px;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;min-width:220px;">
+      <div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:6px;">Distribuição Geral</div><div id="status-bars" style="display:flex;flex-direction:column;gap:6px;"></div></div>
+    </div>
+  </div>
+</div>
+<div class="progress-footer">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <p class="prog-txt" id="prog-txt">Próxima área em --s</p>
+    <p class="sync-txt">Atualizado: 28/04/2026 — Conectar N8N para atualização automática</p>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:100%"></div></div>
+</div>
+
+<script>
+const ROTATE_SEC=60, TICKER_SPEED=22;
+
+// ── DADOS REAIS DO CLICKUP — 28/04/2026 ──────────────────────────
+const TASKS = {
+  'PRODUÇÃO': [
+    {name:'Produção do Gelo Ice Cube',status:'em andamento',priority:'urgent',list:'Projetos e Desenvolvimentos',due:'2026-04-01',assignees:['Haniel']},
+    {name:'Instalação do novo silo de cubo',status:'aberto',priority:'high',list:'Projetos e Desenvolvimentos',due:'2026-04-01',assignees:['Albertt']},
+    {name:'Solicitar catálogo + viabilidade máquina empacotadora 25kg',status:'em andamento',priority:'normal',list:'Projetos e Desenvolvimentos',due:'2026-03-25',assignees:['Haniel']},
+    {name:'Automação do tombador — Máquina de Costura',status:'em andamento',priority:null,list:'Projetos e Desenvolvimentos',due:'2026-03-07',assignees:['Andrea']},
+    {name:'Cronograma de obras e limpeza do teto',status:'aberto',priority:'normal',list:'Industrial',due:'2026-04-01',assignees:['Haniel']},
+    {name:'Monitoramento Consumo Energia Elétrica',status:'aberto',priority:null,list:'Industrial',due:'2026-03-28',assignees:['Haniel']},
+    {name:'Gestão de redução energia elétrica',status:'em andamento',priority:'high',list:'Industrial',due:'2026-03-28',assignees:['Haniel']},
+    {name:'Verificar possibilidade de mão de obra para conserto de paletes',status:'em andamento',priority:'high',list:'Industrial',due:'2026-03-25',assignees:['Albertt']},
+    {name:'Medir Eficiência de Linha de Produção',status:'aberto',priority:null,list:'Industrial',due:'2026-03-25',assignees:['Paulo']},
+    {name:'Sacarias Almoxarifado',status:'aberto',priority:null,list:'Estoque',due:'2026-03-25',assignees:['Haniel']},
+    {name:'Agendar treinamento com técnico da Indumak',status:'aberto',priority:'normal',list:'Industrial',due:null,assignees:['Andrea']},
+    {name:'Programar compra adicional de paletes',status:'aberto',priority:'high',list:'Industrial',due:null,assignees:['Andrea']},
+    {name:'Identificação visual dos paletes reforçados',status:'aberto',priority:'normal',list:'Industrial',due:null,assignees:['Paulo']},
+  ],
+  'MANUTENÇÕES': [
+    {name:'MANUTENÇÃO EQUIPAMENTOS',status:'em andamento',priority:null,list:'Manutenção Equipamentos',due:'2026-03-22',assignees:['Andrea']},
+    {name:'Instalação dos medidores de energia',status:'aberto',priority:'normal',list:'Manutenção Equipamentos',due:null,assignees:['Andrea']},
+    {name:'Comprar 10 paletes reforçados para teste',status:'aberto',priority:'high',list:'Manutenção Equipamentos',due:null,assignees:['Andrea']},
+    {name:'URGENCIAS EM EQUIPAMENTOS',status:'aberto',priority:'urgent',list:'Manutenção Equipamentos',due:null,assignees:['Andrea']},
+    {name:'Preventivas 2023',status:'aberto',priority:null,list:'Manutenção Equipamentos',due:null,assignees:['Andrea']},
+    {name:'PROPOSTA RECUPERAÇÃO MINICAMARA 5TON',status:'aberto',priority:'normal',list:'Manutenção Equipamentos',due:null,assignees:['Andrea']},
+    {name:'Manutenção de Equipamentos',status:'aberto',priority:null,list:'Manutenção Equipamentos',due:null,assignees:['Andrea']},
+    {name:'HR - MOTOR COM PROBLEMA',status:'aberto',priority:'high',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 90 - CAIXA DE MARCHA COM PROBLEMA',status:'aberto',priority:'high',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 80 — Aguardando peça',status:'pendente',priority:null,list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 70',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 66',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 59',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 47',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 46',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 20 MUNK',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 02',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 01',status:'aberto',priority:null,list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA ACELLO',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA TROLLER PATIO',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA TROLLER PONTA NEGRA',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA HR',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'VDA 81',status:'aberto',priority:'normal',list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'Adesivar Caminhões',status:'aberto',priority:null,list:'Manutenção de Veículos',due:null,assignees:['Andrea']},
+    {name:'PREVENTIVAS',status:'em andamento',priority:null,list:'Cadastro Equipamento',due:null,assignees:['Andrea']},
+    {name:'Equip 02',status:'aberto',priority:null,list:'Cadastro Equipamento',due:null,assignees:['Andrea']},
+  ],
+  'COMERCIAL': [
+    {name:'Início do Projeto – Autoatendimento Gelocrim',status:'aberto',priority:null,list:'Comercial',due:'2026-04-30',assignees:['Albertt']},
+    {name:'Atualizar preço da Cooperativa',status:'aberto',priority:'normal',list:'Comercial',due:'2026-04-15',assignees:['Haniel']},
+    {name:'Escalar programa cashback — de 4 para 15 clientes',status:'aberto',priority:'high',list:'CRM',due:'2026-04-01',assignees:['Albertt']},
+    {name:'PROJETO NOVO PRODUTO',status:'aberto',priority:null,list:'Comercial',due:'2026-04-01',assignees:['Albertt']},
+    {name:'Tendencia Vendas',status:'aberto',priority:null,list:'Comercial',due:'2026-03-28',assignees:['Haniel']},
+    {name:'Análise de causa raiz das trocas por produto',status:'aberto',priority:'high',list:'Comercial',due:'2026-03-27',assignees:['Haniel']},
+    {name:'Aquisição de máquinas de cartão — Auto-Atendimento',status:'em andamento',priority:null,list:'Comercial',due:'2026-03-27',assignees:['Aluisio']},
+    {name:'Mapear carteira — perfil de consumo por cliente',status:'aberto',priority:'high',list:'Comercial',due:'2026-03-27',assignees:['Haniel']},
+    {name:'REUNIÃO COMERCIAL ALINHAMENTO',status:'em andamento',priority:null,list:'Comercial',due:'2026-03-27',assignees:['Francyne']},
+    {name:'LEVANTAMENTO LOCALIZAÇÃO DOS CONCORRENTES',status:'em andamento',priority:null,list:'Comercial',due:'2026-03-27',assignees:['Leonardo']},
+    {name:'Acompanhamento Call Center',status:'aberto',priority:null,list:'Comercial',due:'2026-03-27',assignees:['Francyne']},
+    {name:'Criar tabela de clientes que retiram na fábrica',status:'aberto',priority:'urgent',list:'Comercial',due:'2026-03-25',assignees:['Haniel']},
+    {name:'Gerar ranking dos 10 piores clientes em trocas/avarias',status:'aberto',priority:'urgent',list:'Comercial',due:'2026-03-25',assignees:['Haniel']},
+    {name:'RECUPERAR PRINCIPAIS AVENIDAS',status:'em andamento',priority:'normal',list:'Comercial',due:'2026-03-22',assignees:['Leonardo']},
+    {name:'Desenhar rota otimizada — testar por 1 semana',status:'aberto',priority:'normal',list:'Roteirização',due:'2026-04-01',assignees:['Haniel']},
+    {name:'Coletar baseline na zona piloto',status:'aberto',priority:'high',list:'Roteirização',due:'2026-04-01',assignees:['Haniel']},
+    {name:'Selecionar zona piloto para roteirização',status:'aberto',priority:'high',list:'Roteirização',due:'2026-04-01',assignees:['Haniel']},
+    {name:'Implementar dashboard semanal de indicadores CRM',status:'aberto',priority:'normal',list:'CRM',due:'2026-03-26',assignees:['Francyne']},
+    {name:'Criar roteiro padronizado de atendimento CRM',status:'aberto',priority:'normal',list:'CRM',due:'2026-03-26',assignees:['Francyne']},
+    {name:'Capacitar Francyne em CRM e Inside Sales',status:'aberto',priority:'high',list:'CRM',due:'2026-03-26',assignees:['Leonardo']},
+    {name:'Integrar ClickUp ↔ Sankhya via N8N',status:'aberto',priority:'high',list:'CRM',due:'2026-02-19',assignees:['Edgard']},
+    {name:'Mapear campos essenciais do CRM para migração',status:'aberto',priority:'urgent',list:'CRM',due:'2026-01-16',assignees:['Edgard']},
+    {name:'Reunião de indicadores semanal',status:'aberto',priority:null,list:'Comercial',due:null,assignees:['Haniel']},
+  ],
+  'SGQ': [
+    {name:'Pagamento Código de Barras SG1',status:'aberto',priority:null,list:'SGQ',due:'2026-06-15',assignees:['Haniel']},
+    {name:'CHECAGEM DA QUALIDADE DO PRODUTO E PESO DA EMBALAGEM',status:'aberto',priority:null,list:'SGQ',due:'2026-03-25',assignees:['Paulo']},
+    {name:'ANALISES FISICOQUIMICO MICROBIOLOGICO',status:'completo',priority:null,list:'SGQ',due:'2026-03-27',assignees:['Paulo']},
+  ],
+  'COMPRAS': [
+    {name:'ESTEIRA TRANSPORTADORA TIPO CONCHA PARA CUBO',status:'em andamento',priority:'urgent',list:'Compras',due:'2026-04-01',assignees:['Simone']},
+    {name:'Verificar data de entrada das chapas — plataforma cubo',status:'aberto',priority:'high',list:'Compras',due:'2026-03-25',assignees:['Lene']},
+    {name:'Cotar saco plástico de 20kg (comparar com Rafia)',status:'aberto',priority:'normal',list:'Compras',due:'2026-03-21',assignees:['Simone']},
+  ],
+  'PROJETOS': [
+    {name:'LANÇAR PILOTO B2C MOTO — Dia 1 de operação',status:'aberto',priority:'urgent',list:'Piloto B2C',due:'2026-03-26',assignees:['Haniel']},
+    {name:'Definir regras operacionais do piloto B2C',status:'aberto',priority:'high',list:'Piloto B2C',due:'2026-03-26',assignees:['Haniel']},
+    {name:'Montar modelo econômico do piloto',status:'aberto',priority:'high',list:'Piloto B2C',due:'2026-03-26',assignees:['Haniel']},
+    {name:'BSC GELOCRIM',status:'pendente',priority:null,list:'Piloto B2C',due:'2026-04-01',assignees:['Albertt']},
+    {name:'Criar política formal de trocas e avarias',status:'aberto',priority:'high',list:'Redução de Trocas',due:'2026-03-27',assignees:['Albertt']},
+  ],
+};
+
+// Todas as tarefas em lista plana para a visão geral
+const ALL_TASKS = Object.entries(TASKS).flatMap(([folder,tasks])=>tasks.map(t=>({...t,folder})));
+
+const AREAS=[
+  {key:'chart',    label:'Visão Geral ◉',        color:'#C9A96E', isChart:true},
+  {key:'PRODUÇÃO', label:'Produção',              color:'#7BBF96'},
+  {key:'MANUTENÇÕES',label:'Manutenções',         color:'#7AABDA'},
+  {key:'COMERCIAL',label:'Comercial',             color:'#C9A96E'},
+  {key:'SGQ',      label:'SGQ',                   color:'#D4A85A'},
+  {key:'COMPRAS',  label:'Compras',               color:'#E07070'},
+  {key:'PROJETOS', label:'Projetos & Plano de Ação',color:'#9A8ED4'},
+];
+
+const COLS=[
+  {key:'vencidas',icon:'🔴',label:'Vencidas',     bg:'rgba(224,112,112,0.13)',col:'#E07070',countBg:'rgba(224,112,112,0.2)'},
+  {key:'hoje',    icon:'🟡',label:'Hoje',          bg:'rgba(212,168,90,0.11)', col:'#D4A85A',countBg:'rgba(212,168,90,0.2)'},
+  {key:'semana',  icon:'🔵',label:'Esta Semana',   bg:'rgba(122,171,218,0.11)',col:'#7AABDA',countBg:'rgba(122,171,218,0.2)'},
+  {key:'futuras', icon:'🟣',label:'Futuras',       bg:'rgba(154,142,212,0.11)',col:'#9A8ED4',countBg:'rgba(154,142,212,0.2)'},
+  {key:'sem-data',icon:'⚪',label:'Sem Data/Resp.',bg:'rgba(196,185,168,0.08)',col:'#C4B9A8',countBg:'rgba(196,185,168,0.15)'},
+  {key:'concluido',icon:'✅',label:'Concluído',    bg:'rgba(109,191,138,0.11)',col:'#6DBF8A',countBg:'rgba(109,191,138,0.2)'},
+];
+
+const SCFG={
+  'aberto':      {label:'Aberto',       bg:'rgba(109,191,138,0.15)',col:'#6DBF8A'},
+  'em andamento':{label:'Em Andamento', bg:'rgba(122,171,218,0.15)',col:'#7AABDA'},
+  'pendente':    {label:'Pendente',     bg:'rgba(212,168,90,0.15)', col:'#D4A85A'},
+  'completo':    {label:'Concluído',    bg:'rgba(109,191,138,0.1)', col:'#6DBF8A'},
+  'concluido':   {label:'Concluído',    bg:'rgba(109,191,138,0.1)', col:'#6DBF8A'},
+};
+const PRIO={urgent:'#E07070',high:'#D4A85A',normal:'#7AABDA',low:'#8C8378'};
+
+let currentArea=0,cdTimer,countdown=ROTATE_SEC;
+
+function norm(s){return(s||'').toLowerCase().trim();}
+function today(){return new Date(new Date().toDateString());}
+
+function classify(t){
+  const done=['completo','done','concluido'];
+  if(done.includes(norm(t.status))) return 'concluido';
+  if(!t.due||!t.assignees||!t.assignees.length) return 'sem-data';
+  const diff=Math.floor((new Date(t.due)-today())/86400000);
+  if(diff<0)   return 'vencidas';
+  if(diff===0) return 'hoje';
+  if(diff<=7)  return 'semana';
+  return 'futuras';
+}
+
+function fmtDue(str){
+  if(!str)return null;
+  const diff=Math.floor((new Date(str)-today())/86400000);
+  const label=new Date(str).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  if(diff<0)   return{str:label,cls:'overdue'};
+  if(diff===0) return{str:'Hoje',cls:'today-cls'};
+  return{str:label,cls:''};
+}
+
+function buildCard(task,areaColor){
+  const card=document.createElement('div');
+  card.className='task-card';card.style.borderLeftColor=areaColor;
+  const s=norm(task.status);
+  const sc=SCFG[s]||{label:s,bg:'rgba(255,255,255,0.1)',col:'#C4B9A8'};
+  const due=task.due?fmtDue(task.due):null;
+  const noResp=!task.assignees||!task.assignees.length;
+  const fn=(task.assignees||[])[0]||'';
+  const extra=(task.assignees||[]).length>1?` +${task.assignees.length-1}`:'';
+  const ls=(task.list||'').length>15?(task.list||'').slice(0,15)+'…':(task.list||'');
+  card.innerHTML=`<div class="task-name">${task.name}</div>
+    <div class="task-meta">
+      <span class="stag" style="background:${sc.bg};color:${sc.col}">${sc.label}</span>
+      <span class="ltag" style="background:${areaColor}22;color:${areaColor}">${ls}</span>
+      ${task.priority?`<span class="pdot" style="background:${PRIO[task.priority]}"></span>`:''}
+      ${due?`<span class="task-due ${due.cls}">${due.str}</span>`:''}
+      ${noResp?`<span class="no-resp">Sem resp.</span>`:`<span class="resp">👤 ${fn}${extra}</span>`}
+    </div>`;
+  return card;
+}
+
+function setupTicker(outerEl,cards,areaColor){
+  if(!cards.length){
+    const e=document.createElement('div');e.className='empty-col';e.textContent='Nenhuma tarefa';
+    outerEl.appendChild(e);return;
+  }
+  const inner=document.createElement('div');inner.className='ticker-inner';
+  cards.forEach(t=>inner.appendChild(buildCard(t,areaColor)));
+  outerEl.appendChild(inner);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const oH=outerEl.clientHeight,iH=inner.scrollHeight;
+    if(iH<=oH)return;
+    cards.forEach(t=>inner.appendChild(buildCard(t,areaColor)));
+    const dur=(inner.scrollHeight/2)/TICKER_SPEED;
+    inner.style.animation=`tickerScroll ${dur}s linear infinite`;
+    if(!document.getElementById('kf')){
+      const s=document.createElement('style');s.id='kf';
+      s.textContent=`@keyframes tickerScroll{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}`;
+      document.head.appendChild(s);
+    }
+  }));
+}
+
+function getTaskList(area){
+  if(area.isChart) return ALL_TASKS;
+  return TASKS[area.key]||[];
+}
+
+function groupTasks(tasks){
+  const g={};COLS.forEach(c=>g[c.key]=[]);
+  tasks.forEach(t=>{const k=classify(t);if(k&&g[k])g[k].push(t);});
+  return g;
+}
+
+function renderKPIs(tasks){
+  const g=groupTasks(tasks);
+  document.getElementById('k-venc').textContent=g.vencidas.length;
+  document.getElementById('k-hoje').textContent=g.hoje.length;
+  document.getElementById('k-sem').textContent=g.semana.length;
+  document.getElementById('k-fut').textContent=g.futuras.length;
+  document.getElementById('k-sd').textContent=g['sem-data'].length;
+  document.getElementById('k-done').textContent=g.concluido.length;
+  document.getElementById('k-total').textContent=tasks.length;
+  document.getElementById('k-urg').textContent=tasks.filter(t=>t.priority==='urgent').length;
+  return g;
+}
+
+function buildNav(){
+  document.getElementById('nav-dots').innerHTML=AREAS.map((_,i)=>
+    `<span class="dot${i===currentArea?' active':''}" onclick="jumpArea(${i})"></span>`).join('');
+  document.getElementById('area-nav').innerHTML=AREAS.map((a,i)=>
+    `<button class="nav-btn${i===currentArea?' active':''}${a.isChart?' chart-btn':''}" onclick="jumpArea(${i})">${a.label}</button>`).join('');
+}
+
+function drawPizza(){
+  const canvas=document.getElementById('pizza-chart');
+  const ctx=canvas.getContext('2d');
+  const cx=115,cy=115,r=100,rIn=58;
+  const data=AREAS.filter(a=>!a.isChart).map(a=>{
+    const v=(TASKS[a.key]||[]).filter(t=>classify(t)==='vencidas').length;
+    return{label:a.label,color:a.color,value:v};
+  }).filter(d=>d.value>0);
+  const total=data.reduce((s,d)=>s+d.value,0);
+  document.getElementById('chart-total').textContent=total;
+  ctx.clearRect(0,0,230,230);
+  if(!total){
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,255,255,0.07)';ctx.lineWidth=42;ctx.stroke();
+    return;
+  }
+  let angle=-Math.PI/2;
+  data.forEach(d=>{
+    const sl=(d.value/total)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,angle,angle+sl);
+    ctx.closePath();ctx.fillStyle=d.color;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,rIn,0,Math.PI*2);ctx.fillStyle='#2C2825';ctx.fill();
+    angle+=sl;
+  });
+  angle=-Math.PI/2;
+  data.forEach(d=>{
+    const sl=(d.value/total)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,angle,angle+sl);
+    ctx.closePath();ctx.strokeStyle='#2C2825';ctx.lineWidth=2;ctx.stroke();
+    angle+=sl;
+  });
+  const leg=document.getElementById('chart-legend');leg.innerHTML='';
+  AREAS.filter(a=>!a.isChart).forEach(a=>{
+    const v=data.find(d=>d.label===a.label)?.value||0;
+    const pct=total>0?Math.round(v/total*100):0;
+    leg.innerHTML+=`<div class="leg-item"><div class="leg-dot" style="background:${a.color}"></div>
+      <span class="leg-lbl">${a.label}</span>
+      <span class="leg-val">${v}<span style="font-size:9px;color:var(--taupe)"> ${pct}%</span></span></div>`;
+  });
+  const rm={};
+  ALL_TASKS.filter(t=>classify(t)==='vencidas').forEach(t=>{
+    (t.assignees||[]).forEach(r=>{rm[r]=(rm[r]||0)+1;});
+    if(!t.assignees||!t.assignees.length) rm['Sem resp.']=(rm['Sem resp.']||0)+1;
+  });
+  const rL=document.getElementById('resp-legend');rL.innerHTML='';
+  Object.entries(rm).sort((a,b)=>b[1]-a[1]).slice(0,5).forEach(([n,v])=>{
+    const pct=total>0?Math.round(v/total*100):0;
+    rL.innerHTML+=`<div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="display:flex;justify-content:space-between;">
+        <span style="font-size:11px;color:rgba(255,255,255,0.7)">${n}</span>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--cream)">${v}</span>
+      </div>
+      <div style="height:3px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:var(--gold);border-radius:2px;"></div>
+      </div></div>`;
+  });
+  const allG=groupTasks(ALL_TASKS);
+  const sb=document.getElementById('status-bars');sb.innerHTML='';
+  [{key:'vencidas',label:'Vencidas',color:'#E07070'},{key:'hoje',label:'Hoje',color:'#D4A85A'},
+   {key:'semana',label:'Esta Semana',color:'#7AABDA'},{key:'futuras',label:'Futuras',color:'#9A8ED4'},
+   {key:'sem-data',label:'Sem Data/Resp.',color:'#C4B9A8'},{key:'concluido',label:'Concluído',color:'#6DBF8A'}
+  ].forEach(b=>{
+    const v=allG[b.key]?.length||0;
+    const pct=Math.round(v/ALL_TASKS.length*100);
+    sb.innerHTML+=`<div style="display:flex;flex-direction:column;gap:3px;">
+      <div style="display:flex;justify-content:space-between;">
+        <span style="font-size:11px;color:rgba(255,255,255,0.65)">${b.label}</span>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--cream)">${v} <span style="font-size:9px;color:var(--taupe)">${pct}%</span></span>
+      </div>
+      <div style="height:5px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:${b.color};border-radius:2px;"></div>
+      </div></div>`;
+  });
+}
+
+function renderArea(idx){
+  const area=AREAS[idx];
+  const title=document.getElementById('area-title');
+  title.style.opacity='0';
+  setTimeout(()=>{
+    title.innerHTML=area.label.replace('&','<em style="color:var(--gold)"> & </em>').replace('◉','<em style="color:var(--gold)">◉</em>');
+    title.style.opacity='1';
+  },250);
+  const kanban=document.getElementById('kanban-grid');
+  const chartV=document.getElementById('chart-view');
+  if(area.isChart){
+    kanban.style.display='none';kanban.classList.add('hidden');
+    chartV.classList.add('active');
+    renderKPIs(ALL_TASKS);
+    setTimeout(drawPizza,350);
+  } else {
+    chartV.classList.remove('active');kanban.style.display='';
+    const tasks=getTaskList(area);
+    renderKPIs(tasks);
+    const groups=groupTasks(tasks);
+    kanban.classList.add('hidden');
+    setTimeout(()=>{
+      kanban.innerHTML='';
+      COLS.forEach(col=>{
+        const wrap=document.createElement('div');wrap.className='col-wrap';
+        const hdr=document.createElement('div');hdr.className='col-header';hdr.style.background=col.bg;
+        hdr.innerHTML=`<div class="col-hl"><span>${col.icon}</span><span class="col-title" style="color:${col.col}">${col.label}</span></div>
+                       <span class="col-count" style="background:${col.countBg};color:${col.col}">${groups[col.key].length}</span>`;
+        wrap.appendChild(hdr);
+        const outer=document.createElement('div');outer.className='ticker-outer';
+        setupTicker(outer,groups[col.key],area.color);
+        wrap.appendChild(outer);kanban.appendChild(wrap);
+      });
+      kanban.classList.remove('hidden');
+    },300);
+  }
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+}
+
+function startCountdown(){
+  clearInterval(cdTimer);countdown=ROTATE_SEC;
+  const fill=document.getElementById('prog-fill'),txt=document.getElementById('prog-txt');
+  fill.style.width='100%';
+  cdTimer=setInterval(()=>{
+    countdown--;
+    fill.style.width=Math.round(countdown/ROTATE_SEC*100)+'%';
+    txt.textContent=`Próxima área em ${countdown}s`;
+    if(countdown<=0){clearInterval(cdTimer);currentArea=(currentArea+1)%AREAS.length;renderArea(currentArea);startCountdown();}
+  },1000);
+}
+
+function jumpArea(idx){currentArea=idx;renderArea(currentArea);startCountdown();}
+
+function updateClock(){
+  const n=new Date();
+  document.getElementById('clock').textContent=n.toLocaleTimeString('pt-BR');
+  document.getElementById('date-lbl').textContent=n.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+buildNav();renderArea(currentArea);startCountdown();
+setInterval(updateClock,1000);updateClock();
+</script>
+</body>
+</html>
